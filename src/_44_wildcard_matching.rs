@@ -1,75 +1,48 @@
-use std::collections::HashMap;
-
 struct Solution;
 
 impl Solution {
+    const ASTERIKS: u8 = '*' as u8;
+    const QUESTION_MARK: u8 = '?' as u8;
+
     pub fn is_match(s: String, p: String) -> bool {
-        let mut checked = HashMap::<(usize, usize), bool>::new();
-        Self::is_matching(&s, &p, 0, 0, &mut checked)
-    }
+        let s_bytes = s.as_bytes();
+        let p_bytes = p.as_bytes();
 
-    fn is_matching(
-        s: &str,
-        p: &str,
-        s_ind: usize,
-        p_ind: usize,
-        checked: &mut HashMap<(usize, usize), bool>,
-    ) -> bool {
-        if checked.contains_key(&(s_ind, p_ind)) {
-            return checked[&(s_ind, p_ind)];
-        }
+        let mut s_ind = 0;
+        let mut p_ind = 0;
 
-        if s_ind >= s.len() && p_ind >= p.len() {
-            checked.insert((s_ind, p_ind), true);
-            return true;
-        }
+        let mut asteriks_pos: Option<usize> = None;
+        let mut string_pos_at_asteriks: usize = 0;
 
-        if p_ind >= p.len() {
-            checked.insert((s_ind, p_ind), false);
+        while s_ind < s_bytes.len() {
+            if p_ind < p_bytes.len() && (s_bytes[s_ind] == p_bytes[p_ind] || p_bytes[p_ind] == Self::QUESTION_MARK) {
+                s_ind += 1;
+                p_ind += 1;
+                continue;
+            }
+
+            if p_ind < p_bytes.len() && p_bytes[p_ind] == Self::ASTERIKS {
+                asteriks_pos = Some(p_ind);
+                string_pos_at_asteriks = s_ind;
+                p_ind += 1;
+                continue;
+            }
+
+            if let Some(asteriks_pos) = asteriks_pos {
+                p_ind = asteriks_pos + 1;
+                string_pos_at_asteriks += 1;
+                s_ind = string_pos_at_asteriks;
+                continue;
+            }
+
             return false;
         }
 
-        if s_ind >= s.len() {
-            let res = p.chars().skip(p_ind).all(|c| c == '*');
-            checked.insert((s_ind, p_ind), res);
-            return res;
+        while p_ind < p_bytes.len() && p_bytes[p_ind] == Self::ASTERIKS {
+            p_ind += 1;
         }
 
-        let p_chr = p.chars().nth(p_ind).unwrap();
-        let s_chr = s.chars().nth(s_ind).unwrap();
-
-        if p_chr == '?' {
-            let res = Self::is_matching(s, p, s_ind + 1, p_ind + 1, checked);
-            checked.insert((s_ind, p_ind), res);
-            return res;
-        }
-
-        if p_chr == '*' {
-            // We can replace "**" (any amount of asteriks) with "*", because they behave in same way
-            if p_ind > 0 && p.chars().nth(p_ind - 1).unwrap() == '*' {
-                return Self::is_matching(s, p, s_ind, p_ind + 1, checked);
-            }
-
-            let res =
-                // Match 0 symbols
-                Self::is_matching(s, p, s_ind, p_ind + 1, checked) ||
-                // Match symbol and finish asteriks        
-                Self::is_matching(s, p, s_ind + 1, p_ind + 1, checked) ||
-                // Match symbol and continue using asteriks
-                Self::is_matching(s, p, s_ind + 1, p_ind, checked);
-
-            checked.insert((s_ind, p_ind), res);
-            return res;
-        }
-
-        if p_chr == s_chr {
-            let res = Self::is_matching(s, p, s_ind + 1, p_ind + 1, checked);
-            checked.insert((s_ind, p_ind), res);
-            return res;
-        }
-
-        checked.insert((s_ind, p_ind), false);
-        false
+        return p_ind >= p_bytes.len();
     }
 }
 
