@@ -15,7 +15,9 @@ impl Solution {
         let mut string_pos_at_asteriks: usize = 0;
 
         while s_ind < s_bytes.len() {
-            if p_ind < p_bytes.len() && (s_bytes[s_ind] == p_bytes[p_ind] || p_bytes[p_ind] == Self::QUESTION_MARK) {
+            if p_ind < p_bytes.len()
+                && (s_bytes[s_ind] == p_bytes[p_ind] || p_bytes[p_ind] == Self::QUESTION_MARK)
+            {
                 s_ind += 1;
                 p_ind += 1;
                 continue;
