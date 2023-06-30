@@ -2,6 +2,7 @@ mod models;
 
 mod _0_solution_example;
 
+mod _41_first_missing_positive;
 mod _44_wildcard_matching;
 mod _46_permutations;
 mod _47_permutations_ii;
