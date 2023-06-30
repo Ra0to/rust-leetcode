@@ -355,5 +355,5 @@ mod _56_tests {
         let res = Solution::is_number(input);
 
         assert_eq!(res, ans);
-    }    
+    }
 }
