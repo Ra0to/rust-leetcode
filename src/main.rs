@@ -10,5 +10,6 @@ mod _48_rotate_image;
 mod _49_group_anagrams;
 mod _56_merge_intervals;
 mod _65_valid_number;
+mod _66_plus_one;
 
 fn main() {}
