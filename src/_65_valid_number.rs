@@ -1,130 +1,102 @@
-use std::ops::Deref;
-
 struct Solution;
 
-fn is_char(oc: Option<&char>, ch: char) -> bool {
-    match oc {
-        Some(c) => *c == ch,
-        None => false,
-    }
+enum Match {
+    Optional,
+    One,
+    OneAndMore,
+    Any,
 }
 
-fn is_digit(oc: Option<&char>) -> bool {
-    match oc {
-        Some(c) => *c >= '0' && *c <= '9',
-        None => false,
-    }
+fn is_num(c: char) -> bool {
+    c >= '0' && c <= '9'
 }
+
+fn is_dot(c: char) -> bool {
+    c == '.'
+}
+
+fn is_e(c: char) -> bool {
+    c == 'e' || c == 'E'
+}
+
+fn is_sign(c: char) -> bool {
+    c == '+' || c == '-'
+}
+
+fn try_match(s: &Vec<char>, i: &mut usize, predicate: fn(char) -> bool, match_type: Match) -> bool {
+    if *i >= s.len() {
+        return false;
+    }
+
+    let max_chars: usize = match match_type {
+        Match::Optional => 1,
+        Match::One => 1,
+        Match::OneAndMore => usize::MAX,
+        Match::Any => usize::MAX,
+    };
+
+    let mut cnt: usize = 0;
+
+    while *i < s.len() && cnt < max_chars && predicate(s[*i]) {
+        cnt += 1;
+        *i += 1;
+    }
+
+    cnt > 0
+}
+
+fn try_match_fractional(s: &Vec<char>, mut i: &mut usize) -> bool {
+    let mut res: bool;
+
+    // ".01234" case
+    res = try_match(s, &mut i, is_dot, Match::Optional);
+    if res {
+        return try_match(s, &mut i, is_num, Match::OneAndMore);
+    }
+
+    res = try_match(s, &mut i, is_num, Match::OneAndMore);
+
+    if !res {
+        return false;
+    }
+
+    try_match(s, &mut i, is_dot, Match::Optional);
+    try_match(s, &mut i, is_num, Match::Any);
+
+    return true;
+}
+
 impl Solution {
-    // TODO refactor this. Very complex solution. Unsupportable and bad metrics.
     pub fn is_number(s: String) -> bool {
         // ^[+-]?((\d+\.?)|(\d+\.\d+)|(\.\d+))([eE][+-]?\d+)?$
 
-        // ^[+-]?(@|@.|@.@|.@)([eE][+-]?@)?$
         let chars = s.chars().collect::<Vec<char>>();
-        let mut has_e = false;
-        let mut has_nums_before_e = false;
-        let mut has_nums_after_e = false;
-        let mut has_period = false;
-        let mut has_sign = false;
-        dbg!(s);
 
-        for (ind, c) in chars.iter().enumerate() {
-            let p = if ind > 0 { chars.get(ind - 1) } else { None };
-            let c = Some(c);
-            let n = chars.get(ind + 1);
-            dbg!(p);
-            dbg!(c);
-            dbg!(n);
-
-            // Check invalid characters
-            if !(is_digit(c)
-                || is_char(c, 'e')
-                || is_char(c, 'E')
-                || is_char(c, '+')
-                || is_char(c, '-')
-                || is_char(c, '.'))
-            {
-                dbg!("Invalid char");
-                return false;
-            }
-
-            if ind == 0 && (is_char(c, '+') || is_char(c, '-')) {
-                continue;
-            }
-
-            if is_digit(c) {
-                if has_e {
-                    has_nums_after_e = true;
-                } else {
-                    has_nums_before_e = true;
-                }
-
-                continue;
-            }
-
-            if is_char(c, '.') {
-                if has_e {
-                    dbg!("No fractial numbers in exponent allowed");
-                    return false;
-                }
-                if has_period {
-                    dbg!("Already has period");
-                    return false;
-                }
-
-                if !is_digit(p) && !is_digit(n) {
-                    dbg!("No digits around period");
-                    return false;
-                }
-
-                has_period = true;
-                continue;
-            }
-
-            if is_char(c, 'e') || is_char(c, 'E') {
-                if has_e {
-                    dbg!("Already has e");
-                    return false;
-                }
-
-                has_e = true;
-                continue;
-            }
-
-            if is_char(c, '+') || is_char(c, '-') {
-                if !has_e {
-                    dbg!("Sign in wrong place");
-                    return false;
-                }
-
-                if has_sign {
-                    dbg!("Already has sign");
-
-                    return false;
-                }
-
-                if !is_char(p, 'e') && !is_char(p, 'E') {
-                    dbg!("Sign in wrong place in exponent");
-                    return false;
-                }
-
-                if !is_digit(n) {
-                    dbg!("Doesn't contains digit after sign");
-                    return false;
-                }
-
-                has_sign = true;
-                continue;
-            }
+        let mut index: usize = 0;
+        let mut res: bool;
+        try_match(&chars, &mut index, is_sign, Match::Optional);
+        res = try_match_fractional(&chars, &mut index);
+        if !res {
+            return false;
+        }
+        if index == s.len() {
+            return true;
         }
 
-        return has_nums_before_e && (!has_e || (has_e && has_nums_after_e));
+        res = try_match(&chars, &mut index, is_e, Match::One);
+        if !res {
+            return false;
+        }
+
+        try_match(&chars, &mut index, is_sign, Match::Optional);
+        res = try_match(&chars, &mut index, is_num, Match::OneAndMore);
+
+        return res && index == s.len();
     }
 }
 
 #[cfg(test)]
-mod _56_tests {
+mod _65_tests {
     use crate::_65_valid_number::*;
 
     #[test]
