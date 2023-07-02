@@ -2,6 +2,7 @@ mod models;
 
 mod _0_solution_example;
 
+mod _30_substring_with_concatenation_of_all_words;
 mod _41_first_missing_positive;
 mod _44_wildcard_matching;
 mod _46_permutations;
