@@ -22,7 +22,7 @@ impl Solution {
 
         for word in words.into_iter() {
             if !uniq_words_indexes.contains_key(&word) {
-                uniq_words_indexes.insert(word.to_string(), uniq_words);
+                uniq_words_indexes.insert(word, uniq_words);
                 uniq_words_counts.push(1);
                 uniq_words += 1;
             } else {
