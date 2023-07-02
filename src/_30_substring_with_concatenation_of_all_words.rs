@@ -10,22 +10,24 @@ impl Solution {
         let words_cnt = words.len();
         let concat_len = word_len * words_cnt;
 
+        let mut ans = Vec::<i32>::new();
+
         if s.len() < concat_len {
-            return vec![];
+            return ans;
         }
 
+        let mut uniq_words = 0 as usize;
         let mut uniq_words_indexes = HashMap::<String, usize>::new();
-        let mut uniq_words = Vec::<&str>::new();
         let mut uniq_words_counts = Vec::<usize>::new();
 
-        for word in words.iter() {
-            if !uniq_words_indexes.contains_key(word) {
-                uniq_words.push(word);
-                uniq_words_counts.push(0);
-                uniq_words_indexes.insert(word.to_string(), uniq_words.len() - 1);
+        for word in words.into_iter() {
+            if !uniq_words_indexes.contains_key(&word) {
+                uniq_words_indexes.insert(word.to_string(), uniq_words);
+                uniq_words_counts.push(1);
+                uniq_words += 1;
+            } else {
+                uniq_words_counts[uniq_words_indexes[&word]] += 1;
             }
-
-            uniq_words_counts[uniq_words_indexes[word]] += 1;
         }
 
         let mut starts = vec![None as Option<usize>; s.len()];
@@ -33,29 +35,21 @@ impl Solution {
             // IMPROVE: implement faster string comparing with hashes
             let substr = chars_substr.into_iter().collect::<String>();
 
-            for (uniq_word_index, word) in uniq_words.iter().enumerate() {
-                if substr != **word {
-                    continue;
-                }
+            let match_word = uniq_words_indexes.iter().find(|(word, _)| **word == substr);
 
+            if let Some((_, &uniq_word_index)) = match_word {
                 starts[index] = Some(uniq_word_index);
-                break;
             }
         }
 
-        let mut ans = Vec::<i32>::new();
+        let mut words_in_substr = vec![0 as usize; uniq_words];
 
-        let mut left = 0 as usize;
-        let mut right = concat_len - word_len;
-
-        let mut words_in_substr = vec![0 as usize; uniq_words.len()];
-        let mut words_in_substr_cnt = 0 as usize;
-
-        while right <= s.len() - word_len {
+        for left in 0..=(s.len() - concat_len) {
+            let right = left + concat_len - word_len;
             for index in 0..words_in_substr.len() {
                 words_in_substr[index] = 0;
             }
-            words_in_substr_cnt = 0;
+            let mut words_in_substr_cnt = 0;
 
             for index in (left..=right).step_by(word_len) {
                 if let Some(uniq_word_index) = starts[index] {
@@ -64,23 +58,18 @@ impl Solution {
                 }
             }
 
-            if words_in_substr_cnt == words_cnt {
-                let mut is_wrong_count = false;
-
-                for index in 0..uniq_words.len() {
-                    if words_in_substr[index] != uniq_words_counts[index] {
-                        is_wrong_count = true;
-                        break;
-                    }
-                }
-
-                if !is_wrong_count {
-                    ans.push(left as i32);
-                }
+            if words_in_substr_cnt != words_cnt {
+                continue;
             }
-            
-            left += 1;
-            right += 1;
+
+            let is_all_words_presented = words_in_substr
+                .iter()
+                .enumerate()
+                .all(|(index, &cnt)| cnt == uniq_words_counts[index]);
+
+            if is_all_words_presented {
+                ans.push(left as i32);
+            }
         }
 
         ans
