@@ -12,6 +12,7 @@ mod _49_group_anagrams;
 mod _54_spiral_matrix;
 mod _56_merge_intervals;
 mod _58_length_of_last_word;
+mod _59_spiral_matrix_ii;
 mod _65_valid_number;
 mod _66_plus_one;
 
