@@ -21,13 +21,14 @@ impl Solution {
         let mut uniq_words_counts = Vec::<usize>::new();
 
         for word in words.into_iter() {
-            if !uniq_words_indexes.contains_key(&word) {
-                uniq_words_indexes.insert(word, uniq_words);
-                uniq_words_counts.push(1);
-                uniq_words += 1;
-            } else {
+            if uniq_words_indexes.contains_key(&word) {
                 uniq_words_counts[uniq_words_indexes[&word]] += 1;
+                continue;
             }
+
+            uniq_words_indexes.insert(word, uniq_words);
+            uniq_words_counts.push(1);
+            uniq_words += 1;
         }
 
         let mut starts = vec![None as Option<usize>; s.len()];
@@ -37,20 +38,16 @@ impl Solution {
 
             let match_word = uniq_words_indexes.iter().find(|(word, _)| **word == substr);
 
-            if let Some((_, &uniq_word_index)) = match_word {
-                starts[index] = Some(uniq_word_index);
-            }
+            starts[index] = match_word.map(|(_, &uniq_word_index)| uniq_word_index);
         }
 
         let mut words_in_substr = vec![0 as usize; uniq_words];
 
         for left in 0..=(s.len() - concat_len) {
-            let right = left + concat_len - word_len;
-            for index in 0..words_in_substr.len() {
-                words_in_substr[index] = 0;
-            }
+            words_in_substr.iter_mut().for_each(|x| *x = 0);
             let mut words_in_substr_cnt = 0;
 
+            let right = left + concat_len - word_len;
             for index in (left..=right).step_by(word_len) {
                 if let Some(uniq_word_index) = starts[index] {
                     words_in_substr[uniq_word_index] += 1;
