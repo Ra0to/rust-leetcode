@@ -15,7 +15,7 @@ impl Solution {
         if carry > 0 {
             digits.insert(0, carry as i32);
         }
-        
+
         digits
     }
 }
