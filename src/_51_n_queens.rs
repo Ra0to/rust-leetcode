@@ -1,4 +1,4 @@
-struct Solution;
+pub struct Solution;
 
 fn place_queens(
     queens_left: usize,
