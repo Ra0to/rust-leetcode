@@ -9,6 +9,7 @@ mod _46_permutations;
 mod _47_permutations_ii;
 mod _48_rotate_image;
 mod _49_group_anagrams;
+mod _51_n_queens;
 mod _54_spiral_matrix;
 mod _55_jump_game;
 mod _56_merge_intervals;
