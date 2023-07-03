@@ -63,6 +63,8 @@ fn place_queens(
 impl Solution {
     pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
         let n = n as usize;
+
+        // TODO use bit masks instead of vectors
         let mut v_lines = vec![false; n];
         // (x + y) diagonales from bottom left to top right. Start indexing from top left
         let mut d_first = vec![false; 2 * n - 1];
