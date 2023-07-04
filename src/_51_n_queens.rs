@@ -1,20 +1,35 @@
 pub struct Solution;
 
+const MAX_N: usize = 9;
+
+fn get_bit(storage: &i32, bit: usize) -> bool {
+    storage & (1 << bit) > 0
+}
+
+fn set_bit(storage: &mut i32, bit: usize) {
+    *storage = *storage | (1 << bit)
+}
+
+fn unset_bit(storage: &mut i32, bit: usize) {
+    *storage = *storage & (i32::MAX - (1 << bit))
+}
+
 fn place_queens(
     queens_left: usize,
     n: usize,
-    v_lines: &mut Vec<bool>,
-    d_first: &mut Vec<bool>,
-    d_second: &mut Vec<bool>,
-    board: &mut Vec<Vec<bool>>,
+    v_lines: &mut i32,
+    d_first: &mut i32,
+    d_second: &mut i32,
+    board: &mut [i32; MAX_N],
     ans: &mut Vec<Vec<String>>,
 ) {
     if queens_left == 0 {
         let ans_vec = board
             .iter()
+            .take(n)
             .map(|line| {
-                line.iter()
-                    .map(|&place| if place { 'Q' } else { '.' })
+                (0..n)
+                    .map(|pos| if get_bit(line, pos) { 'Q' } else { '.' })
                     .collect::<String>()
             })
             .collect::<Vec<String>>();
@@ -31,32 +46,32 @@ fn place_queens(
 
     let y = queens_left - 1;
     for x in 0..n {
-        if v_lines[x] {
+        if get_bit(v_lines, x) {
             continue;
         }
 
         let df = x + y;
         let ds = n + y - x - 1;
 
-        if d_first[df] {
+        if get_bit(d_first, df) {
             continue;
         }
 
-        if d_second[ds] {
+        if get_bit(d_second, ds) {
             continue;
         }
 
-        v_lines[x] = true;
-        d_first[df] = true;
-        d_second[ds] = true;
-        board[y][x] = true;
+        set_bit(v_lines, x);
+        set_bit(d_first, df);
+        set_bit(d_second, ds);
+        set_bit(&mut board[y], x);
 
         place_queens(queens_left - 1, n, v_lines, d_first, d_second, board, ans);
 
-        v_lines[x] = false;
-        d_first[df] = false;
-        d_second[ds] = false;
-        board[y][x] = false;
+        unset_bit(v_lines, x);
+        unset_bit(d_first, df);
+        unset_bit(d_second, ds);
+        unset_bit(&mut board[y], x);
     }
 }
 
@@ -64,14 +79,13 @@ impl Solution {
     pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
         let n = n as usize;
 
-        // TODO use bit masks instead of vectors
-        let mut v_lines = vec![false; n];
+        let mut v_lines: i32 = 0;
         // (x + y) diagonales from bottom left to top right. Start indexing from top left
-        let mut d_first = vec![false; 2 * n - 1];
+        let mut d_first: i32 = 0;
         // (y -x + n - 1) diagonales from bottom right to top left. Start indexing from bottom left
-        let mut d_second = vec![false; 2 * n - 1];
+        let mut d_second: i32 = 0;
 
-        let mut board = vec![vec![false; n]; n];
+        let mut board = [0 as i32; MAX_N];
 
         let mut ans: Vec<Vec<String>> = Vec::new();
 
