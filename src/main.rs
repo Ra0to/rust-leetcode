@@ -11,6 +11,7 @@ mod _48_rotate_image;
 mod _49_group_anagrams;
 mod _51_n_queens;
 mod _52_n_queens_ii;
+mod _53_maximum_subarray;
 mod _54_spiral_matrix;
 mod _55_jump_game;
 mod _56_merge_intervals;
