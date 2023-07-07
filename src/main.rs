@@ -21,5 +21,6 @@ mod _59_spiral_matrix_ii;
 mod _60_permutation_sequence;
 mod _65_valid_number;
 mod _66_plus_one;
+mod _67_add_binary;
 
 fn main() {}
