@@ -1,16 +1,10 @@
 struct Solution;
 
-const ZERO: u8 = '0' as u8;
-
-fn get_digit(c: char) -> u8 {
-    c as u8 - ZERO
-}
-
 fn to_number(digits: &Vec<u8>) -> String {
     let str = digits
         .iter()
         .skip_while(|&&x| x == 0)
-        .map(|&num| (num + ZERO) as char)
+        .map(|&num| (num + b'0') as char)
         .collect::<String>();
     if str.is_empty() {
         return String::from("0");
@@ -21,61 +15,51 @@ fn to_number(digits: &Vec<u8>) -> String {
 
 impl Solution {
     pub fn multiply(num1: String, num2: String) -> String {
+        let len1 = num1.len();
+        let len2 = num2.len();
+
         let num1_digits = num1
             .chars()
             .into_iter()
-            .map(|c| get_digit(c))
+            .map(|c| c as u8 - b'0')
             .collect::<Vec<u8>>();
         let num2_digits = num2
             .chars()
             .into_iter()
-            .map(|c| get_digit(c))
+            .map(|c| c as u8 - b'0')
             .collect::<Vec<u8>>();
 
-        let mut parts = vec![vec![0 as u8; num1.len()]; num2.len()];
-        let mut max_part_len = 0 as usize;
+        let mut parts = vec![vec![0 as u8; len1 + 1]; len2];
 
-        for i in (0..num2.len()).rev() {
-            dbg!(&i);
+        for i in 0..len2 {
             let mut carry = 0;
             let part = &mut parts[i];
-            for j in (0..num1.len()).rev() {
-                let val = num1_digits[j] * num2_digits[i] + carry;
-                part[j] = val % 10;
+            for j in (0..len1).rev() {
+                let val = num1_digits[j] * num2_digits[len2 - i - 1] + carry;
+                part[j + 1] = val % 10;
                 carry = val / 10;
             }
 
-            if carry > 0 {
-                part.insert(0, carry);
-            }
-
-            for _ in 0..(num2.len() - i - 1) {
-                part.push(0);
-            }
-
-            max_part_len = max_part_len.max(part.len());
-
-            dbg!(to_number(part));
+            part[0] = carry;
         }
 
-        let mut ans = vec![0 as u8; max_part_len];
+        let ans_len = len1 + len2;
+        let mut ans = vec![0 as u8; ans_len];
 
         let mut carry = 0;
 
-        for i in 0..max_part_len {
+        for i in 0..ans_len {
             let mut sum: u16 = carry;
-            for part in parts.iter() {
-                if i < part.len() {
-                    sum += part[part.len() - i - 1] as u16;
+            for part_index in 0..=i.min(parts.len() - 1) {
+                let digit_index = i - part_index;
+                let part = &mut parts[part_index];
+                if digit_index < part.len() {
+                    sum += part[part.len() - digit_index - 1] as u16;
                 }
             }
 
-            ans[max_part_len - i - 1] = (sum % 10) as u8;
+            ans[ans_len - i - 1] = (sum % 10) as u8;
             carry = sum / 10;
-        }
-
-        if carry > 0 {
-            ans.insert(0, carry as u8);
         }
 
         to_number(&ans)
