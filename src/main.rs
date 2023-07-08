@@ -4,6 +4,7 @@ mod _0_solution_example;
 
 mod _30_substring_with_concatenation_of_all_words;
 mod _41_first_missing_positive;
+mod _43_multiply_strings;
 mod _44_wildcard_matching;
 mod _46_permutations;
 mod _47_permutations_ii;
