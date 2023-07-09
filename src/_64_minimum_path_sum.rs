@@ -1,11 +1,9 @@
 struct Solution;
 
 impl Solution {
-    pub fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
+    pub fn min_path_sum(mut grid: Vec<Vec<i32>>) -> i32 {
         let m = grid.len();
         let n = grid[0].len();
-
-        let mut min_path = vec![vec![0; n]; m];
 
         for y in 0..m {
             for x in 0..n {
@@ -13,21 +11,13 @@ impl Solution {
                     continue;
                 }
 
-                let sum_path_from_top = if y == 0 {
-                    i32::MAX
-                } else {
-                    min_path[y - 1][x] + grid[y - 1][x]
-                };
-                let sum_path_from_left = if x == 0 {
-                    i32::MAX
-                } else {
-                    min_path[y][x - 1] + grid[y][x - 1]
-                };
-                min_path[y][x] = i32::min(sum_path_from_top, sum_path_from_left);
+                let sum_path_from_top = if y == 0 { i32::MAX } else { grid[y - 1][x] };
+                let sum_path_from_left = if x == 0 { i32::MAX } else { grid[y][x - 1] };
+                grid[y][x] += i32::min(sum_path_from_top, sum_path_from_left);
             }
         }
 
-        min_path[m - 1][n - 1] + grid[m - 1][n - 1]
+        grid[m - 1][n - 1]
     }
 }
 
