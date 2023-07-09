@@ -20,6 +20,7 @@ mod _57_insert_interval;
 mod _58_length_of_last_word;
 mod _59_spiral_matrix_ii;
 mod _60_permutation_sequence;
+mod _62_unique_paths;
 mod _65_valid_number;
 mod _66_plus_one;
 mod _67_add_binary;
