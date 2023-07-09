@@ -23,6 +23,7 @@ mod _60_permutation_sequence;
 mod _61_rotate_list;
 mod _62_unique_paths;
 mod _63_unique_paths_ii;
+mod _64_minimum_path_sum;
 mod _65_valid_number;
 mod _66_plus_one;
 mod _67_add_binary;
