@@ -27,6 +27,7 @@ mod _64_minimum_path_sum;
 mod _65_valid_number;
 mod _66_plus_one;
 mod _67_add_binary;
+mod _69_sqrt_x;
 mod _71_simplify_path;
 
 fn main() {}
