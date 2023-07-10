@@ -29,5 +29,6 @@ mod _66_plus_one;
 mod _67_add_binary;
 mod _69_sqrt_x;
 mod _71_simplify_path;
+mod _73_set_matrix_zeroes;
 
 fn main() {}
