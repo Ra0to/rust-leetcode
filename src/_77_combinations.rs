@@ -1,43 +1,27 @@
 pub struct Solution;
 
-fn fill(
-    n: usize,
-    k: usize,
-    i: usize,
-    min: usize,
-    list: &mut Vec<i32>,
-    used: &mut Vec<bool>,
-    ans: &mut Vec<Vec<i32>>,
-) {
-    if i >= k {
-        ans.push(list.clone());
-        return;
-    }
-
-    for num in min..=n {
-        if used[num] {
-            continue;
-        }
-
-        used[num] = true;
-        list[i] = num as i32;
-
-        fill(n, k, i + 1, num + 1, list, used, ans);
-
-        used[num] = false;
-    }
-}
-
 impl Solution {
     pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
-        let n = n as usize;
-        let k = k as usize;
-        let mut used = vec![false; n + 1];
-        let mut list = vec![0; k];
+        let mut list = vec![0; k as usize];
         let mut ans = Vec::<Vec<i32>>::new();
 
-        fill(n, k, 0, 1, &mut list, &mut used, &mut ans);
+        let mut ind = 0 as usize;
+        loop {
+            list[ind] += 1;
 
+            if list[ind] > n {
+                if ind == 0 {
+                    break;
+                }
+
+                ind -= 1;
+            } else if ind == (k - 1) as usize {
+                ans.push(list.clone());
+            } else {
+                list[ind + 1] = list[ind];
+                ind += 1;
+            }
+        }
         ans
     }
 }
