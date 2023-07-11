@@ -27,9 +27,46 @@ fn find_zero(mut matrix: &mut Vec<Vec<i32>>, from_x: usize, from_y: usize) {
     }
 }
 
+fn set_zeroes_recursion(matrix: &mut Vec<Vec<i32>>) {
+    find_zero(matrix, 0, 0);
+}
+
+fn set_zeroes_first_line(matrix: &mut Vec<Vec<i32>>) {
+    let has_zero_in_first_col = matrix.iter().any(|line| line[0] == 0);
+    let has_zero_in_first_row = matrix[0].iter().any(|&elem| elem == 0);
+
+    for y in 1..matrix.len() {
+        for x in 1..matrix[0].len() {
+            if matrix[y][x] == 0 {
+                matrix[y][0] = 0;
+                matrix[0][x] = 0;
+            }
+        }
+    }
+
+    for y in 1..matrix.len() {
+        for x in 1..matrix[0].len() {
+            if matrix[0][x] == 0 || matrix[y][0] == 0 {
+                matrix[y][x] = 0;
+            }
+        }
+    }
+
+    if has_zero_in_first_col {
+        matrix.iter_mut().for_each(|elem| elem[0] = 0);
+    }
+
+    if has_zero_in_first_row {
+        matrix[0].iter_mut().for_each(|elem| *elem = 0);
+    }
+}
+
 impl Solution {
     pub fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
-        find_zero(matrix, 0, 0);
+        // Original solution
+        // set_zeroes_recursion(matrix);
+        // Alternative solution
+        set_zeroes_first_line(matrix);
     }
 }
 
