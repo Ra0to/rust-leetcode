@@ -1,18 +1,36 @@
 pub struct Solution;
 
+const RED: i32 = 0;
+const BLUE: i32 = 2;
+
 impl Solution {
     pub fn sort_colors(nums: &mut Vec<i32>) {
-        // 0 - red, 1 - white, 2 - blue
-        let mut colors = [0 as usize; 3];
-        nums.iter().for_each(|&color| colors[color as usize] += 1);
+        let mut red_index = 0 as usize;
+        let mut blue_index = nums.len() - 1;
 
-        let mut color_index = 0 as usize;
-        for i in 0..nums.len() {
-            while colors[color_index] == 0 {
-                color_index += 1;
+        let mut index = 0 as usize;
+
+        while index <= blue_index {
+            match nums[index] {
+                RED if red_index != index => {
+                    nums.swap(index, red_index);
+                    red_index += 1;
+                }
+                RED => {
+                    red_index += 1;
+                    index += 1;
+                }
+                BLUE => {
+                    nums.swap(index, blue_index);
+
+                    if blue_index == 0 {
+                        break;
+                    }
+
+                    blue_index -= 1;
+                }
+                _ => index += 1,
             }
-            nums[i] = color_index as i32;
-            colors[color_index] -= 1;
         }
     }
 }
@@ -55,6 +73,26 @@ mod _75_tests {
     fn test4() {
         let mut nums = vec![1, 1, 1, 1, 1];
         let ans = vec![1, 1, 1, 1, 1];
+
+        Solution::sort_colors(&mut nums);
+
+        assert_eq!(nums, ans);
+    }
+
+    #[test]
+    fn test5() {
+        let mut nums = vec![1];
+        let ans = vec![1];
+
+        Solution::sort_colors(&mut nums);
+
+        assert_eq!(nums, ans);
+    }
+
+    #[test]
+    fn test6() {
+        let mut nums = vec![2];
+        let ans = vec![2];
 
         Solution::sort_colors(&mut nums);
 
