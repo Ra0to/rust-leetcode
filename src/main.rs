@@ -31,5 +31,6 @@ mod _67_add_binary;
 mod _69_sqrt_x;
 mod _71_simplify_path;
 mod _73_set_matrix_zeroes;
+mod _74_search_a_2d_matrix;
 
 fn main() {}
