@@ -1,5 +1,5 @@
 use super::models::ListNode;
-struct Solution;
+pub struct Solution;
 
 impl Solution {
     pub fn rotate_right(mut head: Option<Box<ListNode>>, mut k: i32) -> Option<Box<ListNode>> {

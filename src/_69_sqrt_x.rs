@@ -1,4 +1,4 @@
-struct Solution;
+pub struct Solution;
 
 const SQRT_MAX: i32 = 46340;
 

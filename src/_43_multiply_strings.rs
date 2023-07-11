@@ -1,4 +1,4 @@
-struct Solution;
+pub struct Solution;
 
 fn to_number(digits: &Vec<u8>) -> String {
     let str = digits

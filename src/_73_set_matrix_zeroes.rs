@@ -1,4 +1,4 @@
-struct Solution;
+pub struct Solution;
 
 fn find_zero(mut matrix: &mut Vec<Vec<i32>>, from_x: usize, from_y: usize) {
     for y in from_y..matrix.len() {
@@ -67,6 +67,10 @@ impl Solution {
         // set_zeroes_recursion(matrix);
         // Alternative solution
         set_zeroes_first_line(matrix);
+    }
+
+    pub fn original_set_zeroes(matrix: &mut Vec<Vec<i32>>) {
+        set_zeroes_recursion(matrix);
     }
 }
 

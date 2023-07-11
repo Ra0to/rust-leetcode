@@ -1,4 +1,4 @@
-struct Solution;
+pub struct Solution;
 
 impl Solution {
     const ASTERIKS: u8 = '*' as u8;
