@@ -73,17 +73,12 @@ impl Solution {
 #[cfg(test)]
 mod _73_tests {
     use crate::_73_set_matrix_zeroes::*;
+    use crate::helpers::test_helpers::ConvertableToVecMatrix;
 
     #[test]
     fn test1() {
-        let mut matrix = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
-        let ans = [[1, 0, 1], [0, 0, 0], [1, 0, 1]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let mut matrix = [[1, 1, 1], [1, 0, 1], [1, 1, 1]].to_vecs();
+        let ans = [[1, 0, 1], [0, 0, 0], [1, 0, 1]].to_vecs();
 
         Solution::set_zeroes(&mut matrix);
 
@@ -92,14 +87,8 @@ mod _73_tests {
 
     #[test]
     fn test2() {
-        let mut matrix = [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
-        let ans = [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let mut matrix = [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]].to_vecs();
+        let ans = [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]].to_vecs();
 
         Solution::set_zeroes(&mut matrix);
 
@@ -130,14 +119,8 @@ mod _73_tests {
 
     #[test]
     fn test4() {
-        let mut matrix = [[1, 2, 3, 4], [5, 0, 7, 8], [0, 10, 11, 12], [13, 14, 15, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
-        let ans = [[0, 0, 3, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let mut matrix = [[1, 2, 3, 4], [5, 0, 7, 8], [0, 10, 11, 12], [13, 14, 15, 0]].to_vecs();
+        let ans = [[0, 0, 3, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]].to_vecs();
 
         Solution::set_zeroes(&mut matrix);
 
@@ -153,9 +136,7 @@ mod _73_tests {
             [1, 2, 1, 3],
             [0, 0, 1, 1],
         ]
-        .into_iter()
-        .map(|list| Vec::from_iter(list))
-        .collect::<Vec<Vec<i32>>>();
+        .to_vecs();
         let ans = [
             [0, 0, 0, 0],
             [0, 0, 0, 4],
@@ -163,9 +144,7 @@ mod _73_tests {
             [0, 0, 0, 3],
             [0, 0, 0, 0],
         ]
-        .into_iter()
-        .map(|list| Vec::from_iter(list))
-        .collect::<Vec<Vec<i32>>>();
+        .to_vecs();
 
         Solution::set_zeroes(&mut matrix);
 

@@ -30,12 +30,12 @@ impl Solution {
 
 #[cfg(test)]
 mod _56_tests {
-    use crate::_56_merge_intervals::*;
+    use crate::{_56_merge_intervals::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
-        let intervals = vec![vec![1, 3], vec![2, 6], vec![8, 10], vec![15, 18]];
-        let ans = vec![vec![1, 6], vec![8, 10], vec![15, 18]];
+        let intervals = [[1, 3], [2, 6], [8, 10], [15, 18]].to_vecs();
+        let ans = [[1, 6], [8, 10], [15, 18]].to_vecs();
 
         let res = Solution::merge(intervals);
 
@@ -44,8 +44,8 @@ mod _56_tests {
 
     #[test]
     fn test2() {
-        let intervals = vec![vec![1, 4], vec![4, 5]];
-        let ans = vec![vec![1, 5]];
+        let intervals = [[1, 4], [4, 5]].to_vecs();
+        let ans = [[1, 5]].to_vecs();
 
         let res = Solution::merge(intervals);
 
@@ -54,15 +54,8 @@ mod _56_tests {
 
     #[test]
     fn test3() {
-        let intervals = vec![
-            vec![15, 18],
-            vec![8, 10],
-            vec![1, 3],
-            vec![2, 6],
-            vec![8, 10],
-            vec![15, 18],
-        ];
-        let ans = vec![vec![1, 6], vec![8, 10], vec![15, 18]];
+        let intervals = [[15, 18], [8, 10], [1, 3], [2, 6], [8, 10], [15, 18]].to_vecs();
+        let ans = [[1, 6], [8, 10], [15, 18]].to_vecs();
 
         let res = Solution::merge(intervals);
 
@@ -71,15 +64,8 @@ mod _56_tests {
 
     #[test]
     fn test4() {
-        let intervals = vec![
-            vec![1, 1],
-            vec![1, 1],
-            vec![1, 1],
-            vec![1, 1],
-            vec![1, 1],
-            vec![1, 1],
-        ];
-        let ans = vec![vec![1, 1]];
+        let intervals = [[1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1]].to_vecs();
+        let ans = [[1, 1]].to_vecs();
 
         let res = Solution::merge(intervals);
 
@@ -88,8 +74,8 @@ mod _56_tests {
 
     #[test]
     fn test5() {
-        let intervals = vec![vec![1, 4], vec![2, 3]];
-        let ans = vec![vec![1, 4]];
+        let intervals = [[1, 4], [2, 3]].to_vecs();
+        let ans = [[1, 4]].to_vecs();
 
         let res = Solution::merge(intervals);
 

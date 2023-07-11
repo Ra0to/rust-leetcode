@@ -37,19 +37,20 @@ impl Solution {
 
 #[cfg(test)]
 mod _46_tests {
-    use crate::_46_permutations::*;
+    use crate::{_46_permutations::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
         let nums = vec![1, 2, 3];
-        let mut ans = vec![
-            vec![1, 2, 3],
-            vec![1, 3, 2],
-            vec![2, 1, 3],
-            vec![2, 3, 1],
-            vec![3, 1, 2],
-            vec![3, 2, 1],
-        ];
+        let mut ans = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [2, 3, 1],
+            [3, 1, 2],
+            [3, 2, 1],
+        ]
+        .to_vecs();
 
         let mut res = Solution::permute(nums);
 
@@ -62,7 +63,7 @@ mod _46_tests {
     #[test]
     fn test2() {
         let nums = vec![0, 1];
-        let mut ans = vec![vec![0, 1], vec![1, 0]];
+        let mut ans = [[0, 1], [1, 0]].to_vecs();
 
         let mut res = Solution::permute(nums);
 
@@ -75,7 +76,7 @@ mod _46_tests {
     #[test]
     fn test3() {
         let nums = vec![1];
-        let mut ans = vec![vec![1]];
+        let mut ans = [[1]].to_vecs();
 
         let mut res = Solution::permute(nums);
 

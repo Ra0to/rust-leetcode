@@ -105,12 +105,12 @@ impl Solution {
 
 #[cfg(test)]
 mod _51_tests {
-    use crate::_51_n_queens::*;
+    use crate::{_51_n_queens::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
         let n = 1;
-        let mut ans = vec![vec![String::from("Q")]];
+        let mut ans = [[String::from("Q")]].to_vecs();
 
         let mut res = Solution::solve_n_queens(n);
 
@@ -122,20 +122,21 @@ mod _51_tests {
     #[test]
     fn test2() {
         let n = 4;
-        let mut ans = vec![
-            vec![
+        let mut ans = [
+            [
                 String::from(".Q.."),
                 String::from("...Q"),
                 String::from("Q..."),
                 String::from("..Q."),
             ],
-            vec![
+            [
                 String::from("..Q."),
                 String::from("Q..."),
                 String::from("...Q"),
                 String::from(".Q.."),
             ],
-        ];
+        ]
+        .to_vecs();
 
         let mut res = Solution::solve_n_queens(n);
 

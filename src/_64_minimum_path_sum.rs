@@ -23,14 +23,11 @@ impl Solution {
 
 #[cfg(test)]
 mod _64_tests {
-    use crate::_64_minimum_path_sum::*;
+    use crate::{_64_minimum_path_sum::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
-        let grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
-            .into_iter()
-            .map(|x| Vec::from_iter(x))
-            .collect::<Vec<Vec<i32>>>();
+        let grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]].to_vecs();
         let ans = 7;
 
         let res = Solution::min_path_sum(grid);
@@ -40,10 +37,7 @@ mod _64_tests {
 
     #[test]
     fn test2() {
-        let grid = [[1, 2, 3], [4, 5, 6]]
-            .into_iter()
-            .map(|x| Vec::from_iter(x))
-            .collect::<Vec<Vec<i32>>>();
+        let grid = [[1, 2, 3], [4, 5, 6]].to_vecs();
         let ans = 12;
 
         let res = Solution::min_path_sum(grid);
@@ -53,10 +47,7 @@ mod _64_tests {
 
     #[test]
     fn test3() {
-        let grid = [[1]]
-            .into_iter()
-            .map(|x| Vec::from_iter(x))
-            .collect::<Vec<Vec<i32>>>();
+        let grid = [[1]].to_vecs();
         let ans = 1;
 
         let res = Solution::min_path_sum(grid);
@@ -66,10 +57,7 @@ mod _64_tests {
 
     #[test]
     fn test4() {
-        let grid = [[10]]
-            .into_iter()
-            .map(|x| Vec::from_iter(x))
-            .collect::<Vec<Vec<i32>>>();
+        let grid = [[10]].to_vecs();
         let ans = 10;
 
         let res = Solution::min_path_sum(grid);

@@ -33,14 +33,11 @@ impl Solution {
 
 #[cfg(test)]
 mod _63_tests {
-    use crate::_63_unique_paths_ii::*;
+    use crate::{_63_unique_paths_ii::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
-        let obstacle_grid = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let obstacle_grid = [[0, 0, 0], [0, 1, 0], [0, 0, 0]].to_vecs();
         let ans = 2;
 
         let res = Solution::unique_paths_with_obstacles(obstacle_grid);
@@ -50,10 +47,7 @@ mod _63_tests {
 
     #[test]
     fn test2() {
-        let obstacle_grid = [[0, 1], [0, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let obstacle_grid = [[0, 1], [0, 0]].to_vecs();
         let ans = 1;
 
         let res = Solution::unique_paths_with_obstacles(obstacle_grid);
@@ -63,10 +57,7 @@ mod _63_tests {
 
     #[test]
     fn test3() {
-        let obstacle_grid = [[0, 1], [1, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let obstacle_grid = [[0, 1], [1, 0]].to_vecs();
         let ans = 0;
 
         let res = Solution::unique_paths_with_obstacles(obstacle_grid);
@@ -76,10 +67,7 @@ mod _63_tests {
 
     #[test]
     fn test4() {
-        let obstacle_grid = [[0, 0], [0, 1]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let obstacle_grid = [[0, 0], [0, 1]].to_vecs();
         let ans = 0;
 
         let res = Solution::unique_paths_with_obstacles(obstacle_grid);
@@ -89,10 +77,7 @@ mod _63_tests {
 
     #[test]
     fn test5() {
-        let obstacle_grid = [[1, 0], [0, 0]]
-            .into_iter()
-            .map(|list| Vec::from_iter(list))
-            .collect::<Vec<Vec<i32>>>();
+        let obstacle_grid = [[1, 0], [0, 0]].to_vecs();
         let ans = 0;
 
         let res = Solution::unique_paths_with_obstacles(obstacle_grid);

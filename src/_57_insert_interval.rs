@@ -47,13 +47,13 @@ impl Solution {
 
 #[cfg(test)]
 mod _57_tests {
-    use crate::_57_insert_interval::*;
+    use crate::{_57_insert_interval::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
-        let intervals = vec![vec![1, 3], vec![6, 9]];
+        let intervals = [[1, 3], [6, 9]].to_vecs();
         let new_interval = vec![2, 5];
-        let ans = vec![vec![1, 5], vec![6, 9]];
+        let ans = [[1, 5], [6, 9]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -62,15 +62,9 @@ mod _57_tests {
 
     #[test]
     fn test2() {
-        let intervals = vec![
-            vec![1, 2],
-            vec![3, 5],
-            vec![6, 7],
-            vec![8, 10],
-            vec![12, 16],
-        ];
+        let intervals = [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]].to_vecs();
         let new_interval = vec![4, 8];
-        let ans = vec![vec![1, 2], vec![3, 10], vec![12, 16]];
+        let ans = [[1, 2], [3, 10], [12, 16]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -79,9 +73,9 @@ mod _57_tests {
 
     #[test]
     fn test3() {
-        let intervals = vec![vec![1, 5], vec![8, 10], vec![12, 15]];
+        let intervals = [[1, 5], [8, 10], [12, 15]].to_vecs();
         let new_interval = vec![0, 50];
-        let ans = vec![vec![0, 50]];
+        let ans = [[0, 50]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -90,9 +84,9 @@ mod _57_tests {
 
     #[test]
     fn test4() {
-        let intervals = vec![vec![1, 5], vec![8, 10], vec![12, 15]];
+        let intervals = [[1, 5], [8, 10], [12, 15]].to_vecs();
         let new_interval = vec![8, 10];
-        let ans = vec![vec![1, 5], vec![8, 10], vec![12, 15]];
+        let ans = [[1, 5], [8, 10], [12, 15]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -103,7 +97,7 @@ mod _57_tests {
     fn test5() {
         let intervals = vec![];
         let new_interval = vec![8, 10];
-        let ans = vec![vec![8, 10]];
+        let ans = [[8, 10]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -112,9 +106,9 @@ mod _57_tests {
 
     #[test]
     fn test6() {
-        let intervals = vec![vec![1, 5]];
+        let intervals = [[1, 5]].to_vecs();
         let new_interval = vec![6, 8];
-        let ans = vec![vec![1, 5], vec![6, 8]];
+        let ans = [[1, 5], [6, 8]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -123,9 +117,9 @@ mod _57_tests {
 
     #[test]
     fn test7() {
-        let intervals = vec![vec![8, 10]];
+        let intervals = [[8, 10]].to_vecs();
         let new_interval = vec![1, 2];
-        let ans = vec![vec![1, 2], vec![8, 10]];
+        let ans = [[1, 2], [8, 10]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -134,9 +128,9 @@ mod _57_tests {
 
     #[test]
     fn test8() {
-        let intervals = vec![vec![1, 5]];
+        let intervals = [[1, 5]].to_vecs();
         let new_interval = vec![2, 3];
-        let ans = vec![vec![1, 5]];
+        let ans = [[1, 5]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 
@@ -145,9 +139,9 @@ mod _57_tests {
 
     #[test]
     fn test9() {
-        let intervals = vec![vec![3, 5], vec![12, 15]];
+        let intervals = [[3, 5], [12, 15]].to_vecs();
         let new_interval = vec![6, 6];
-        let ans = vec![vec![3, 5], vec![6, 6], vec![12, 15]];
+        let ans = [[3, 5], [6, 6], [12, 15]].to_vecs();
 
         let res = Solution::insert(intervals, new_interval);
 

@@ -62,12 +62,12 @@ impl Solution {
 
 #[cfg(test)]
 mod _59_tests {
-    use crate::_59_spiral_matrix_ii::*;
+    use crate::{_59_spiral_matrix_ii::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
         let n = 3;
-        let ans = vec![vec![1, 2, 3], vec![8, 9, 4], vec![7, 6, 5]];
+        let ans = [[1, 2, 3], [8, 9, 4], [7, 6, 5]].to_vecs();
 
         let res = Solution::generate_matrix(n);
 
@@ -77,7 +77,7 @@ mod _59_tests {
     #[test]
     fn test2() {
         let n = 1;
-        let ans = vec![vec![1]];
+        let ans = [[1]].to_vecs();
 
         let res = Solution::generate_matrix(n);
 

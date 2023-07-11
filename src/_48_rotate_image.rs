@@ -40,12 +40,12 @@ impl Solution {
 
 #[cfg(test)]
 mod _48_tests {
-    use crate::_48_rotate_image::*;
+    use crate::{_48_rotate_image::*, helpers::ConvertableToVecMatrix};
 
     #[test]
     fn test1() {
-        let mut matrix = vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]];
-        let ans = vec![vec![7, 4, 1], vec![8, 5, 2], vec![9, 6, 3]];
+        let mut matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]].to_vecs();
+        let ans = [[7, 4, 1], [8, 5, 2], [9, 6, 3]].to_vecs();
 
         Solution::rotate(&mut matrix);
 
@@ -54,18 +54,20 @@ mod _48_tests {
 
     #[test]
     fn test2() {
-        let mut matrix = vec![
-            vec![5, 1, 9, 11],
-            vec![2, 4, 8, 10],
-            vec![13, 3, 6, 7],
-            vec![15, 14, 12, 16],
-        ];
-        let ans = vec![
-            vec![15, 13, 2, 5],
-            vec![14, 3, 4, 1],
-            vec![12, 6, 8, 9],
-            vec![16, 7, 10, 11],
-        ];
+        let mut matrix = [
+            [5, 1, 9, 11],
+            [2, 4, 8, 10],
+            [13, 3, 6, 7],
+            [15, 14, 12, 16],
+        ]
+        .to_vecs();
+        let ans = [
+            [15, 13, 2, 5],
+            [14, 3, 4, 1],
+            [12, 6, 8, 9],
+            [16, 7, 10, 11],
+        ]
+        .to_vecs();
 
         Solution::rotate(&mut matrix);
 
