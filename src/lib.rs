@@ -32,3 +32,4 @@ pub mod _69_sqrt_x;
 pub mod _71_simplify_path;
 pub mod _73_set_matrix_zeroes;
 pub mod _74_search_a_2d_matrix;
+pub mod _75_sort_colors;
