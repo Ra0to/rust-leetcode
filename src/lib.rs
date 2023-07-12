@@ -29,6 +29,7 @@ pub mod _65_valid_number;
 pub mod _66_plus_one;
 pub mod _67_add_binary;
 pub mod _69_sqrt_x;
+pub mod _70_climing_stairs;
 pub mod _71_simplify_path;
 pub mod _73_set_matrix_zeroes;
 pub mod _74_search_a_2d_matrix;
