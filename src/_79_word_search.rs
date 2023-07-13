@@ -43,8 +43,6 @@ impl Solution {
 
         for y in 0..board.len() {
             for x in 0..board[0].len() {
-                used.iter_mut()
-                    .for_each(|line| line.iter_mut().for_each(|elem| *elem = false));
                 if check(x, y, 0, &board, &mut used, &word) {
                     return true;
                 }
