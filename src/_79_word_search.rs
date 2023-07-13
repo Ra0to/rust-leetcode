@@ -4,8 +4,7 @@ fn check(
     x: usize,
     y: usize,
     letter_index: usize,
-    board: &Vec<Vec<char>>,
-    used: &mut Vec<Vec<bool>>,
+    board: &mut Vec<Vec<char>>,
     word: &Vec<char>,
 ) -> bool {
     if letter_index >= word.len() {
@@ -16,34 +15,29 @@ fn check(
         return false;
     }
 
-    if used[y][x] {
-        return false;
-    }
-
     if board[y][x] != word[letter_index] {
         return false;
     }
 
-    used[y][x] = true;
+    board[y][x] = ' ';
 
-    let res = (x > 0 && check(x - 1, y, letter_index + 1, board, used, word))
-        || check(x + 1, y, letter_index + 1, board, used, word)
-        || (y > 0 && check(x, y - 1, letter_index + 1, board, used, word))
-        || check(x, y + 1, letter_index + 1, board, used, word);
+    let res = (x > 0 && check(x - 1, y, letter_index + 1, board, word))
+        || check(x + 1, y, letter_index + 1, board, word)
+        || (y > 0 && check(x, y - 1, letter_index + 1, board, word))
+        || check(x, y + 1, letter_index + 1, board, word);
 
-    used[y][x] = false;
+    board[y][x] = word[letter_index];
 
     res
 }
 
 impl Solution {
-    pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {
-        let mut used = vec![vec![false; board[0].len()]; board.len()];
+    pub fn exist(mut board: Vec<Vec<char>>, word: String) -> bool {
         let word = word.chars().collect::<Vec<char>>();
 
         for y in 0..board.len() {
             for x in 0..board[0].len() {
-                if check(x, y, 0, &board, &mut used, &word) {
+                if check(x, y, 0, &mut board, &word) {
                     return true;
                 }
             }
