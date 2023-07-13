@@ -35,3 +35,4 @@ pub mod _73_set_matrix_zeroes;
 pub mod _74_search_a_2d_matrix;
 pub mod _75_sort_colors;
 pub mod _77_combinations;
+pub mod _79_word_search;
