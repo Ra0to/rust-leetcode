@@ -7,6 +7,7 @@ pub mod _30_substring_with_concatenation_of_all_words;
 pub mod _41_first_missing_positive;
 pub mod _43_multiply_strings;
 pub mod _44_wildcard_matching;
+pub mod _45_jump_game_ii;
 pub mod _46_permutations;
 pub mod _47_permutations_ii;
 pub mod _48_rotate_image;
