@@ -38,4 +38,5 @@ pub mod _75_sort_colors;
 pub mod _77_combinations;
 pub mod _78_subsets;
 pub mod _79_word_search;
+pub mod _80_remove_duplicates_from_sorted_array_ii;
 pub mod _83_remove_duplicates_from_sorted_list;
