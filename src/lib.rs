@@ -40,3 +40,4 @@ pub mod _78_subsets;
 pub mod _79_word_search;
 pub mod _80_remove_duplicates_from_sorted_array_ii;
 pub mod _83_remove_duplicates_from_sorted_list;
+pub mod _88_merge_sorted_array;
