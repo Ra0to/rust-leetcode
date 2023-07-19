@@ -2,19 +2,44 @@ pub struct Solution;
 
 impl Solution {
     pub fn search(nums: Vec<i32>, target: i32) -> bool {
-        let rotation_point = nums
-            .windows(2)
-            .enumerate()
-            .find(|(_, x)| x[1] < x[0])
-            .map(|(ind, _)| ind);
+        let mut left = 0;
+        let mut right = nums.len() - 1;
 
-        match rotation_point {
-            Some(rotation_index) if target <= nums[rotation_index] && target >= nums[0] => {
-                nums[..=rotation_index].binary_search(&target).is_ok()
+        while right - left > 1 {
+            let middle = (left + right) / 2;
+
+            if nums[middle] == target {
+                return true;
             }
-            Some(rotation_index) => nums[rotation_index + 1..].binary_search(&target).is_ok(),
-            None => nums.binary_search(&target).is_ok(),
+
+            if nums[middle] == nums[left] {
+                left += 1;
+                continue;
+            }
+
+            // Both in first part
+            if target > nums[left] && nums[middle] > nums[left] {
+                if target > nums[middle] {
+                    left = middle;
+                } else {
+                    right = middle;
+                }
+            } else
+            // both in second part
+            if target < nums[left] && nums[middle] < nums[left] {
+                if target > nums[middle] {
+                    left = middle;
+                } else {
+                    right = middle;
+                }
+            } else if target < nums[left] && nums[middle] > nums[left] {
+                left = middle;
+            } else {
+                right = middle;
+            }
         }
+
+        nums[left] == target || nums[right] == target
     }
 }
 
