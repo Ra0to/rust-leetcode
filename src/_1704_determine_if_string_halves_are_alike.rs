@@ -2,21 +2,23 @@ pub struct Solution;
 
 impl Solution {
     pub fn halves_are_alike(s: String) -> bool {
-        let vowels: [char; 10] = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
-        let mut vowels_count = 0;
-        let chars: Vec<char> = s.chars().collect();
+        let mut vowels_diff = 0;
 
-        let len = s.len();
-        for i in 0..(len / 2) {
-            vowels_count += if vowels.contains(&chars[i]) { 1 } else { 0 };
-            vowels_count += if vowels.contains(&chars[len - i - 1]) {
-                -1
-            } else {
-                0
+        let half_len = s.len() / 2;
+        for (ind, c) in s.chars().enumerate() {
+            vowels_diff += match c {
+                'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => {
+                    if ind < half_len {
+                        1
+                    } else {
+                        -1
+                    }
+                }
+                _ => 0,
             };
         }
 
-        vowels_count == 0
+        vowels_diff == 0
     }
 }
 
