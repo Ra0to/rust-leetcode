@@ -3,6 +3,7 @@ pub mod models;
 
 pub mod _0_solution_example;
 
+pub mod _1704_determine_if_string_halves_are_alike;
 pub mod _30_substring_with_concatenation_of_all_words;
 pub mod _41_first_missing_positive;
 pub mod _43_multiply_strings;
